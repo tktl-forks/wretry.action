@@ -62,7 +62,7 @@ runs:
   steps:
     - name: retry
       id: retry
-      uses: Wandalen/wretry.action/main@v3.8.0_js_action
+      uses: taktile-org/wretry.action/main@e94c43bf2e865e7dbbd90b0c1061053f5888932a
       with:
         action: '${{ inputs.action }}'
         command: '${{ inputs.command }}'
