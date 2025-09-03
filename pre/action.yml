@@ -62,7 +62,8 @@ runs:
   steps:
     - name: retry
       id: retry
-      uses: Wandalen/wretry.action/pre@v3.8.0_js_action
+      # Note: I cannot pin it to SHA and also commit it.
+      uses: tktl-forks/wretry.action/pre
       with:
         action: '${{ inputs.action }}'
         command: '${{ inputs.command }}'
