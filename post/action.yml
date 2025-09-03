@@ -62,7 +62,8 @@ runs:
   steps:
     - name: retry
       id: retry
-      uses: taktile-org/wretry.action/post@e94c43bf2e865e7dbbd90b0c1061053f5888932a
+      # Note: I cannot pin it to SHA and also commit it.
+      uses: tktl-forks/wretry.action/post
       with:
         action: '${{ inputs.action }}'
         command: '${{ inputs.command }}'

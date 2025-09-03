@@ -21,10 +21,10 @@ about:
     - njs >= 10.0.0
 path:
   origins:
-    - 'git+https:///github.com/Wandalen/wretry.action'
+    - 'git+https:///github.com/tktl-forks/wretry.action'
   entry: src/Main.js
-  repository: 'git+https:///github.com/Wandalen/wretry.action'
-  bugtracker: 'https:///github.com/Wandalen/wretry.action/issues'
+  repository: 'git+https:///github.com/tktl-forks/wretry.action'
+  bugtracker: 'https:///github.com/tktl-forks/wretry.action/issues'
   in: .
   out: out
   temp:
@@ -92,6 +92,7 @@ submodule:
   '@actions/core':
     path: 'npm:///@actions/core!1.10.0'
     enabled: 0
+  # OK, I let it slide, but move the parser to org repo.
   github-actions-parser:
     path: 'npm:///github-actions-parser!dmvict/github-actions-parser'
     enabled: 0
