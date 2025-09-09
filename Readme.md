@@ -33,13 +33,10 @@ It is a cause of failed jobs. For this case, the action `wretry.action` can retr
 - Default action always includes both `pre` and `post` stages. If an external action contains a `pre` and/or `post` stage, the action will also execute these stages.
 - The repository includes subdirectories with alternative action setups that can skip the `pre` or/and `post` stages, as necessary.
 - Action handles conditions in `JavaScript` and `Docker` actions ( fields `pre-if` and `post-if` ). Some conditions can be unsolvable and then action skips the stage.
-- Resolves external action default inputs from next contexts : `github`, `env`, `job`, `matrix`, `inputs`.
+- Resolves external action default inputs from next contexts : `github`, `env`, `job`, `matrix`, `steps`, `inputs`.
 - Can resolve user-provided context `steps`.
 - Retries actions with defined number of attempts ( default is 2 ).
 - Retries actions with defined delay between attempts ( default is 0 ).
-
-Thanks to the provided [typings](action-types.yml), it is possible to use this action in a type-safe way using
-https://github.com/typesafegithub/github-workflows-kt which allows writing workflow files using a type-safe Kotlin DSL.
 
 ## Inputs
 
@@ -89,9 +86,29 @@ An example of declaration of option with multiline string :
 
 Setup working directory for the action. Works with only commands. Default is `github.workspace` path.
 
+### `env_context`
+
+Pass context `env` into an external action. Action cannot resolve separate environments of workflow at the startup and provide all environments. If you need valid context `env`, then add option `env_context : ${{ toJSON( env ) }}`.
+
+### `github_context`
+
+Pass context `github` into an external action. Default is global context `github`.
+
+### `inputs_context`
+
+Pass context `inputs` into an external action. The action cannot resolve context `inputs` and resolves all inputs from passed options and action description. To pass correct inputs context you need to combine passed options into and stringified JSON object.
+
+### `job_context`
+
+Pass context `job` into an external action. Default is context `job` of a job.
+
+### `matrix_context`
+
+Pass context `matrix` into an external action. Default is context `matrix` of a job.
+
 ### `steps_context`
 
-Pass context `steps` into an external action. The action cannot resolve runtime context `steps` from environment contexts. If you need valid context `steps`, then add option `steps_context : ${{ toJSON( steps ) }}`.
+Pass context `steps` into an external action. If you need valid context `steps`, then add option `steps_context : ${{ toJSON( steps ) }}`.
 
 ### `attempt_limit`
 
@@ -215,15 +232,6 @@ You have a few options for obtaining a compatible action implementation:
 - Run the workflow with the required action, but without the `wretry.action`, and check the stages in the workflow run.
 - Open the action directory and review the `action.yml` file. Look for any extra stages listed besides `main`.
 - If you run command, then you can get `main` action that skips `pre` and `post` stages.
-
-### Declaration of alternative action
-
-To choose an alternative action add the action subdirectory in declaration of `wretry.action`. For example, the declaration with `main` subdirectory:
-```yml
-- uses: Wandalen/wretry.action/main@master
-```
-
-You can choose either method based on your preference. If you prefer not to perform additional manipulations, you can select the default `wretry.action` that retries all available stages of the external action.
 
 ## Example usage
 
